@@ -1,0 +1,16 @@
+[Unit]
+Description=Root and Guest Boot Health Watch
+After=network.target hvisor.service
+Wants=hvisor.service
+
+[Service]
+Type=simple
+EnvironmentFile=-/etc/default/root_boot_health_watch
+ExecStart=/usr/local/sbin/root_boot_health_watch.sh
+Restart=on-failure
+RestartSec=2
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
