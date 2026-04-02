@@ -7,7 +7,7 @@
 - `IRQ activity`
   - 由 `ivc_boot_watch` 监控 root 侧 IVC IRQ 是否有活动。
 - `heartbeat/seq health`
-  - 由 `root_guest_health_watch.py` 读取 `ivc_demo <id> receive` 的 `IVC_JSON` 输出，
+  - 由 `root_guest_health_watch.py` 读取 `IVC_DEMO_BIN <id> receive` 的 `IVC_JSON` 输出，
     检查 `seq` 是否持续递增，并判断 guest Linux 与 guest RT-Thread 是否健康启动。
 
 只有 heartbeat 侧才是最终健康判定；IRQ 侧是辅助链路活性判断。
@@ -73,7 +73,7 @@ vi /etc/default/root_boot_health_watch
 - `GUEST_RTTHREAD_IVC_ID`
   - guest RT-Thread 使用的 IVC 设备号，默认 `2`。
 - `IVC_DEMO_BIN`
-  - `ivc_demo` 的路径，默认 `/usr/bin/ivc_demo`。
+  - 接收程序的路径，推荐设置为 `/usr/local/bin/ivc_monitor`。
 - `STARTUP_TIMEOUT_S`
   - 启动窗口，默认 `30` 秒。
 - `HEARTBEAT_TIMEOUT_S`
@@ -144,12 +144,12 @@ journalctl -u root_boot_health_watch.service -f
 
 ## 常见问题
 
-1. 日志提示 `ivc_demo not found`
+1. 日志提示 `ivc receiver not found`
 
 检查：
 
 ```sh
-ls -l /usr/bin/ivc_demo
+ls -l /usr/local/bin/ivc_monitor
 ```
 
 或者把 `IVC_DEMO_BIN` 改成实际路径。
